@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vende tu Auto — Guticars</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&family=Lora:ital,wght@0,600;1,600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2B50CC;
+      --blue-dark: #1A2A6C;
+      --cream: #F4F3E8;
+      --white: #ffffff;
+      --text-dark: #1A2A6C;
+      --border: #D8D6C4;
+      --input-bg: #F4F3E8;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--blue-dark);
+      color: white;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .topbar .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .topbar strong { font-weight: 700; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--blue-dark);
+      color: white;
+      padding: 48px 24px 120px;
+      text-align: center;
+      position: relative;
+      clip-path: ellipse(110% 100% at 50% 0%);
+    }
+
+    .hero-logo {
+      height: 120px;
+      margin: 0 auto 32px;
+      display: block;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 800;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hero h1 .accent {
+      color: #7B9EF5;
+    }
+
+    .hero-sub {
+      font-family: 'Lora', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-style: italic;
+      font-weight: 400;
+      opacity: 0.85;
+      max-width: 480px;
+      margin: 16px auto 0;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 32px;
+    }
+    .stat {
+      flex: 1;
+      max-width: 180px;
+      text-align: center;
+      padding: 0 16px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      display: block;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1100px;
+      margin: -60px auto 0;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Left column — trust info */
+    .trust-col {
+      padding-top: 80px;
+      color: var(--text-dark);
+    }
+    .trust-col h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .trust-col p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 380px;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .trust-badge::before {
+      content: '✓';
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      background: var(--blue);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+    .step-text span {
+      font-size: 13px;
+      color: #777;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 8px 40px rgba(27,42,108,0.12);
+      position: relative;
+      z-index: 10;
+    }
+
+    .form-header {
+      margin-bottom: 28px;
+    }
+    .form-tag {
+      display: inline-block;
+      background: #EEF2FF;
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .form-header h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .form-header p {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .form-trust {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .form-trust-item {
+      font-size: 12px;
+      color: #999;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .form-trust-item svg { flex-shrink: 0; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+      color: #bbb;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #E8E8E8;
+    }
+    .divider span { display: flex; align-items: center; gap: 6px; }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input::placeholder { color: #BBBBAA; }
+    input:focus, select:focus {
+      border-color: var(--blue);
+      background: white;
+    }
+
+    .phone-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .phone-wrap:focus-within {
+      border-color: var(--blue);
+      background: white;
+    }
+    .phone-prefix {
+      padding: 13px 12px 13px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      border-right: 1.5px solid var(--border);
+      white-space: nowrap;
+      background: transparent;
+    }
+    .phone-wrap input {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      padding-left: 12px;
+    }
+    .phone-wrap input:focus { background: transparent; }
+
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #999;
+      pointer-events: none;
+    }
+    .select-wrap select { cursor: pointer; padding-right: 36px; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-submit:hover { background: #1A3BA8; }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .form-redirect-note {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #25D366;
+      font-weight: 600;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      background: #DCFCE7;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+    .success-state h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .success-state p {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.6;
+    }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: white;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue-dark);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+    }
+    footer strong { color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .main {
+        grid-template-columns: 1fr;
+        margin-top: -40px;
+      }
+      .trust-col {
+        display: none;
+      }
+      .form-card {
+        padding: 28px 20px;
+      }
+      .hero {
+        padding-bottom: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="dot"></span>
+  Asesores disponibles ahora · <strong>Respondemos en menos de 5 minutos</strong>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-logo" src="https://assets.cdn.filesafe.space/QEq79rclmcjdbRM28gr6/media/69d52e760cee05bc4ed95a58.png" alt="Guticars" />
+
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Compramos en todo Lima, te citamos en nuestro taller.
+  </div>
+
+  <h1>
+    Vendenos tu auto.<br>
+    <span class="accent">Oferta inmediata.</span>
+  </h1>
+
+  <p class="hero-sub">Sin tramites lentos, sin esperas. Llenas el formulario, te contactamos, acordamos precio y firmamos en notaria.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">+100</span>
+      <span class="stat-label">Autos comprados</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">&lt;5 min</span>
+      <span class="stat-label">Tiempo de respuesta</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Transferencia segura</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: TRUST -->
+  <div class="trust-col">
+    <h2>Cuentanos<br>Sobre Tu Auto</h2>
+    <p>Cuéntanos los datos básicos y un asesor te contacta con una oferta real.</p>
+
+    <div class="trust-badges">
+      <span class="trust-badge">Oferta inmediata</span>
+      <span class="trust-badge">Pago seguro</span>
+      <span class="trust-badge">Sin comisiones</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Llena el formulario</strong>
+          <span>Menos de 2 minutos, sin compromisos.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Te contactamos por WhatsApp</strong>
+          <span>Un asesor te envía una oferta real.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Acordamos y firmamos</strong>
+          <span>Transferencia inmediata en notaria.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM CARD -->
+  <div class="form-card">
+
+    <div id="form-state">
+      <div class="form-header">
+        <div class="form-tag">Solo toma 2 minutos</div>
+        <h3>Cuentanos Sobre Tu Auto</h3>
+        <p>Cuéntanos los datos básicos y un asesor te contacta con una oferta real.</p>
+      </div>
+
+      <div class="trust-badges" style="margin-bottom:20px;">
+        <span class="trust-badge">Oferta inmediata</span>
+        <span class="trust-badge">Pago seguro</span>
+        <span class="trust-badge">Sin comisiones</span>
+      </div>
+
+      <form id="cotizador-form">
+
+        <div class="field-group">
+          <label class="field-label" for="nombre">Nombre Completo</label>
+          <input type="text" id="nombre" placeholder="Ej: Juan Perez" autocomplete="name" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="telefono">Teléfono / WhatsApp *</label>
+          <div class="phone-wrap">
+            <span class="phone-prefix">+51</span>
+            <input type="tel" id="telefono" placeholder="999 999 999" required autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="divider">
+          <span>🚗 Datos del auto</span>
+        </div>
+
+        <div class="field-row field-group">
+          <div>
+            <label class="field-label" for="marca">Marca</label>
+            <div class="select-wrap">
+              <select id="marca" required>
+                <option value="" disabled selected>Selecciona marca</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="modelo">Modelo</label>
+            <div class="select-wrap">
+              <select id="modelo" required disabled>
+                <option value="" disabled selected>Elige marca</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row field-group">
+          <div>
+            <label class="field-label" for="anio">Año</label>
+            <div class="select-wrap">
+              <select id="anio" required disabled>
+                <option value="" disabled selected>Elige modelo</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="kilometraje">Kilometraje</label>
+            <input type="text" id="kilometraje" placeholder="Ej: 45,000 km" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="cuando">¿Cuándo quiere vender?</label>
+          <div class="select-wrap">
+            <select id="cuando" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="Inmediatamente">Inmediatamente</option>
+              <option value="Esta semana">Esta semana</option>
+              <option value="Este mes">Este mes</option>
+              <option value="En 2-3 meses">En 2-3 meses</option>
+              <option value="Solo estoy explorando">Solo estoy explorando</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span id="btn-text">Quiero mi oferta →</span>
+        </button>
+
+        <p class="form-footer">🔒 Datos protegidos &nbsp;·&nbsp; 🤝 Sin compromiso &nbsp;·&nbsp; 💬 Respuesta por WhatsApp</p>
+        <p class="form-redirect-note">Al enviar el formulario serás redirigido a nuestro WhatsApp donde un asesor te contactará con tu oferta.</p>
+      </form>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-state" id="success-state">
+      <div class="success-icon">✅</div>
+      <h3>¡Listo!</h3>
+      <p>Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.</p>
+      <a class="btn-whatsapp" href="https://wa.me/51907077718" target="_blank">
+        💬 Escribir por WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <strong>2026 Guticars</strong> — Compra y venta de autos en Lima
+</footer>
+
+<script>
+  // ── DATA: Marca → Modelos (mismas marcas que carlo.pe, adaptado a Venezuela/Lima)
+  const CAR_DATA = {
+    "AUDI": ["A1","A3","A4","A5","A6","A7","A8","Q2","Q3","Q5","Q7","Q8","TT","RS3","RS5","RS6","S3","S4","S5"],
+    "BMW": ["116i","118i","120i","218i","220i","320i","330i","420i","430i","520i","530i","730i","M2","M3","M4","M5","X1","X2","X3","X4","X5","X6","X7","Z4"],
+    "CHANGAN": ["CS35","CS55","CS75","CS85","Uni-K","Uni-T","Uni-V"],
+    "CHERY": ["Arrizo 5","Arrizo 6","Tiggo 2","Tiggo 4","Tiggo 5","Tiggo 7","Tiggo 8"],
+    "CHEVROLET": ["Aveo","Beat","Captiva","Colorado","Cruze","Equinox","Groove","Malibu","Onix","S10","Silverado","Spark","Tahoe","Tracker","Trailblazer","Traverse"],
+    "CITROEN": ["C3","C3 Aircross","C4","C4 Cactus","C5 Aircross","Berlingo"],
+    "DFSK": ["Glory 500","Glory 560","Glory 580","Glory 600","C35","V21"],
+    "FIAT": ["Argo","Cronos","Doblo","Ducato","Mobi","Pulse","Strada","Toro"],
+    "FORD": ["Bronco","EcoSport","Edge","Escape","Expedition","Explorer","F-150","Fiesta","Focus","Fusion","Mustang","Ranger","Territory"],
+    "GEELY": ["Azkarra","Coolray","Emgrand","Monjaro","Okavango","Tugella"],
+    "HAVAL": ["H1","H2","H4","H6","H9","Jolion","Dargo"],
+    "HONDA": ["BR-V","Civic","City","CR-V","HR-V","Odyssey","Pilot","Ridgeline","WR-V"],
+    "HYUNDAI": ["Accent","Creta","Elantra","Grand i10","i10","i20","Ioniq","Kona","Santa Fe","Sonata","Starex","Tucson","Venue"],
+    "JAC": ["J7","S2","S3","S4","S5","T6","T8"],
+    "JEEP": ["Cherokee","Commander","Compass","Gladiator","Grand Cherokee","Renegade","Wrangler"],
+    "JETOUR": ["Dashing","X70","X90","X95"],
+    "KIA": ["Carnival","Cerato","EV6","Forte","K5","Niro","Picanto","Seltos","Sonet","Sorento","Sportage","Stinger","Telluride"],
+    "MAZDA": ["CX-3","CX-30","CX-5","CX-50","CX-9","Mazda2","Mazda3","Mazda6","MX-5"],
+    "MERCEDES-BENZ": ["A 180","A 200","C 180","C 200","C 300","E 200","E 300","GLA","GLC","GLE","GLS","AMG GT","Clase S","Sprinter","Vito"],
+    "MASERATI": ["Ghibli","Ghibli S","Ghibli Trofeo","Grancabrio","Granturismo","Granturismo Folgore","Grecale","Grecale Folgore","Levante","Levante S","Levante Trofeo","MC20","Quattroporte","Quattroporte S","Quattroporte Trofeo"],
+    "MG": ["HS","MG3","MG5","MG6","RX5","ZS","ZS EV"],
+    "MINI": ["Clubman","Countryman","Cooper","Cooper S","John Cooper Works","Paceman"],
+    "MITSUBISHI": ["ASX","Eclipse Cross","L200","Montero","Outlander","Pajero","Xpander"],
+    "NISSAN": ["Frontier","Kicks","March","Murano","Navara","Note","Pathfinder","Qashqai","Sentra","Terra","Tiida","Versa","X-Trail"],
+    "PEUGEOT": ["2008","3008","5008","208","308","408","508","Boxer","Partner"],
+    "PORSCHE": ["718 Boxster","718 Cayman","718 Cayman GT4","718 Spyder","911 Carrera","911 Carrera 4","911 Carrera 4S","911 Carrera S","911 GT3","911 GT3 RS","911 Targa","911 Targa 4","911 Targa 4S","911 Turbo","911 Turbo S","Cayenne","Cayenne Coupe","Cayenne E-Hybrid","Cayenne GTS","Cayenne Turbo","Cayenne Turbo S","Macan","Macan GTS","Macan S","Macan Turbo","Panamera","Panamera 4","Panamera 4S","Panamera GTS","Panamera Sport Turismo","Panamera Turbo","Taycan","Taycan 4S","Taycan Cross Turismo","Taycan GTS","Taycan Sport Turismo","Taycan Turbo","Taycan Turbo S"],
+    "RENAULT": ["Captur","Clio","Duster","Fluence","Kangoo","Koleos","Logan","Oroch","Sandero","Stepway","Triber"],
+    "SEAT": ["Arona","Ateca","Ibiza","Leon","Tarraco"],
+    "SUBARU": ["Ascent","BRZ","Crosstrek","Forester","Impreza","Legacy","Outback","WRX"],
+    "SUZUKI": ["Baleno","Ertiga","Grand Vitara","Ignis","Jimny","S-Presso","Swift","Vitara","XL7"],
+    "TOYOTA": ["4Runner","Agya","Avanza","Camry","Corolla","Corolla Cross","Corolla Sedan","Etios","Fortuner","GR Yaris","Hilux","Hilux Stout","Land Cruiser","Land Cruiser Prado","Prius","RAV4","Rush","Raize","Yaris Cross","Yaris Hatchback","Yaris Sedan"],
+    "VOLKSWAGEN": ["Amarok","Fox","Golf","Jetta","Nivus","Polo","Saveiro","T-Cross","T-Roc","Taos","Tiguan","Touareg","Virtus","Voyage"],
+    "VOLVO": ["C40","S60","S90","V60","V90","XC40","XC60","XC90"],
+  };
+
+  const YEARS = ["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015","2014","2012","2010"];
+
+  // Populate marcas
+  const marcaSelect = document.getElementById('marca');
+  const modeloSelect = document.getElementById('modelo');
+  const anioSelect = document.getElementById('anio');
+
+  Object.keys(CAR_DATA).sort().forEach(marca => {
+    marcaSelect.add(new Option(marca, marca));
+  });
+
+  marcaSelect.addEventListener('change', () => {
+    const modelos = CAR_DATA[marcaSelect.value] || [];
+    modeloSelect.innerHTML = '<option value="" disabled selected>Selecciona modelo</option>';
+    modelos.forEach(m => modeloSelect.add(new Option(m, m)));
+    modeloSelect.disabled = false;
+    modeloSelect.value = '';
+
+    anioSelect.innerHTML = '<option value="" disabled selected>Elige año</option>';
+    anioSelect.disabled = true;
+  });
+
+  modeloSelect.addEventListener('change', () => {
+    anioSelect.innerHTML = '<option value="" disabled selected>Selecciona año</option>';
+    YEARS.forEach(y => anioSelect.add(new Option(y, y)));
+    anioSelect.disabled = false;
+    anioSelect.value = '';
+  });
+
+  const form = document.getElementById('cotizador-form');
+  const formState = document.getElementById('form-state');
+  const successState = document.getElementById('success-state');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const telefono = document.getElementById('telefono').value.trim();
+    if (!telefono) {
+      document.getElementById('telefono').focus();
+      return;
+    }
+
+    const cuando = document.getElementById('cuando').value;
+    if (!cuando) {
+      document.getElementById('cuando').focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    btnText.textContent = 'Enviando...';
+
+    const nombre = document.getElementById('nombre').value.trim();
+    const marca = document.getElementById('marca').value.trim();
+    const modelo = document.getElementById('modelo').value.trim();
+    const anio = document.getElementById('anio').value.trim();
+    const km = document.getElementById('kilometraje').value.trim();
+
+    const [firstName, ...rest] = nombre.split(' ');
+    const lastName = rest.join(' ');
+
+    const noteLines = [
+      marca && `Marca: ${marca}`,
+      modelo && `Modelo: ${modelo}`,
+      anio && `Año: ${anio}`,
+      km && `Kilometraje: ${km}`,
+      cuando && `¿Cuándo vender?: ${cuando}`,
+    ].filter(Boolean);
+
+    const body = {
+      locationId: 'qMiJmuo5KIQw1OjqRx7A',
+      firstName: firstName || nombre,
+      lastName: lastName || undefined,
+      phone: '+51' + telefono.replace(/\s+/g, ''),
+      tags: ['web-cotizador', 'guticars-landing'],
+      customFields: [
+        { key: 'nota_auto', field_value: noteLines.join(' | ') },
+      ],
+      source: 'guticars.com',
+    };
+
+    try {
+      const res = await fetch('https://services.leadconnectorhq.com/contacts/', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer pit-35fa3754-ffca-4459-88b9-be91363569b5',
+          'Version': '2021-07-28',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) {
+        formState.style.display = 'none';
+        successState.style.display = 'block';
+        setTimeout(() => {
+          window.open('https://wa.me/51907077718?text=Hola%2C%20acabo%20de%20completar%20el%20formulario%20en%20Guticars%20para%20vender%20mi%20auto.%20Quedo%20a%20la%20espera%20de%20su%20contacto%20%F0%9F%9A%97', '_blank');
+        }, 1500);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.error('GHL error:', err);
+        btnText.textContent = 'Error. Intenta de nuevo.';
+        submitBtn.disabled = false;
+      }
+    } catch (err) {
+      console.error(err);
+      btnText.textContent = 'Error de conexión. Intenta de nuevo.';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
