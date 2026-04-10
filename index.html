@@ -682,10 +682,12 @@
     const hotLeads = ['Lo antes posible', 'Esta semana o la próxima'];
     const tagTiempo = hotLeads.includes(cuando) ? 'lead-caliente' : 'lead-frio';
 
-    // Build WhatsApp message with car details
+    // Build WhatsApp message with full car details
     const waMsg = encodeURIComponent(
-      'Hola, acabo de llenar el formulario en Guticars para vender mi '
-      + (marca ? marca + ' ' : '') + (modelo ? modelo + ' ' : '') + (anio ? anio : 'auto')
+      'Hola, soy ' + (nombre || 'un interesado')
+      + '. Quiero vender mi ' + (marca || 'auto') + (modelo ? ' ' + modelo : '') + (anio ? ' del ' + anio : '')
+      + (km ? ' con ' + km + ' de kilometraje' : '')
+      + '. Estoy buscando vender ' + cuando.toLowerCase()
       + '. Quedo a la espera de su contacto 🚗'
     );
 
