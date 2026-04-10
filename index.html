@@ -707,12 +707,21 @@
       }),
     }).catch(console.error);
 
-    // Show success + redirect to WhatsApp
+    // Show success
     formState.style.display = 'none';
     successState.style.display = 'block';
 
-    // Use location.href — works on ALL browsers including mobile Safari
-    window.location.href = 'https://wa.me/51907077718?text=' + waMsg;
+    if (hotLeads.includes(cuando)) {
+      // Hot leads → WhatsApp
+      document.getElementById('success-wa').style.display = 'inline-flex';
+      window.location.href = 'https://wa.me/51907077718?text=' + waMsg;
+    } else {
+      // Cold leads → solo mensaje, sin redirect
+      document.getElementById('success-icon').textContent = '🙌';
+      document.getElementById('success-title').textContent = '¡Gracias!';
+      document.getElementById('success-msg').innerHTML = 'Recibimos la información de tu auto.<br>Te contactaremos pronto con una oferta.';
+      document.getElementById('success-wa').style.display = 'none';
+    }
   });
 </script>
 
