@@ -56,9 +56,18 @@
       clip-path: ellipse(110% 100% at 50% 0%);
     }
 
-    .hero-logo {
-      height: 160px;
+    .hero-logo-wrap {
+      width: 200px;
+      height: 200px;
+      background: #F4F3E8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0 auto 32px;
+    }
+    .hero-logo {
+      height: 120px;
       display: block;
     }
 
@@ -439,7 +448,9 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img class="hero-logo" src="https://assets.cdn.filesafe.space/QEq79rclmcjdbRM28gr6/media/69d52e760cee05bc4ed95a58.png" alt="Guticars" />
+  <div class="hero-logo-wrap">
+    <img class="hero-logo" src="https://assets.cdn.filesafe.space/QEq79rclmcjdbRM28gr6/media/69d52e760cee05bc4ed95a58.png" alt="Guticars" />
+  </div>
 
   <div class="hero-badge">
     <span class="dot"></span>
