@@ -633,10 +633,9 @@
           <div class="select-wrap">
             <select id="cuando" required>
               <option value="" disabled selected>Selecciona una opción</option>
-              <option value="Inmediatamente">Inmediatamente</option>
-              <option value="Esta semana">Esta semana</option>
+              <option value="Lo antes posible">Lo antes posible</option>
+              <option value="Esta semana o la próxima">Esta semana o la próxima</option>
               <option value="Este mes">Este mes</option>
-              <option value="En 2-3 meses">En 2-3 meses</option>
               <option value="Solo estoy explorando">Solo estoy explorando</option>
             </select>
           </div>
@@ -653,10 +652,10 @@
 
     <!-- SUCCESS -->
     <div class="success-state" id="success-state">
-      <div class="success-icon">✅</div>
-      <h3>¡Listo!</h3>
-      <p>Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.</p>
-      <a class="btn-whatsapp" href="https://wa.me/51907077718" target="_blank">
+      <div class="success-icon" id="success-icon">✅</div>
+      <h3 id="success-title">¡Listo!</h3>
+      <p id="success-msg">Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.</p>
+      <a class="btn-whatsapp" id="success-wa" href="https://wa.me/51907077718" target="_blank">
         💬 Escribir por WhatsApp
       </a>
     </div>
@@ -781,7 +780,7 @@
       firstName: firstName || nombre,
       lastName: lastName || undefined,
       phone: '+51' + telefono.replace(/\s+/g, ''),
-      tags: ['web-cotizador', 'guticars-landing'],
+      tags: ['web-cotizador', 'guticars-landing', ['Lo antes posible','Esta semana o la próxima'].includes(cuando) ? 'lead-caliente' : 'lead-frio'],
       customFields: [
         { key: 'nota_auto', field_value: noteLines.join(' | ') },
       ],
@@ -802,9 +801,20 @@
       if (res.ok) {
         formState.style.display = 'none';
         successState.style.display = 'block';
-        setTimeout(() => {
-          window.open('https://wa.me/51907077718?text=Hola%2C%20acabo%20de%20completar%20el%20formulario%20en%20Guticars%20para%20vender%20mi%20auto.%20Quedo%20a%20la%20espera%20de%20su%20contacto%20%F0%9F%9A%97', '_blank');
-        }, 1500);
+        const hotLeads = ['Lo antes posible', 'Esta semana o la próxima'];
+        if (hotLeads.includes(cuando)) {
+          document.getElementById('success-title').textContent = '¡Listo!';
+          document.getElementById('success-msg').innerHTML = 'Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.';
+          document.getElementById('success-wa').style.display = 'inline-flex';
+          setTimeout(() => {
+            window.open('https://wa.me/51907077718?text=Hola%2C%20acabo%20de%20completar%20el%20formulario%20en%20Guticars%20para%20vender%20mi%20auto.%20Quedo%20a%20la%20espera%20de%20su%20contacto%20%F0%9F%9A%97', '_blank');
+          }, 1500);
+        } else {
+          document.getElementById('success-icon').textContent = '🙌';
+          document.getElementById('success-title').textContent = '¡Gracias!';
+          document.getElementById('success-msg').innerHTML = 'Recibimos la información de tu auto.<br>Te contactaremos pronto con una oferta.';
+          document.getElementById('success-wa').style.display = 'none';
+        }
       } else {
         const err = await res.json().catch(() => ({}));
         console.error('GHL error:', err);
