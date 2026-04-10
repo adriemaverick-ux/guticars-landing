@@ -138,31 +138,8 @@
       max-width: 1100px;
       margin: -60px auto 0;
       padding: 0 24px 80px;
-      display: grid;
-      grid-template-columns: 1fr 480px;
-      gap: 48px;
-      align-items: start;
-    }
-
-    /* Left column — trust info */
-    .trust-col {
-      padding-top: 80px;
-      color: var(--text-dark);
-    }
-    .trust-col h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      line-height: 1.1;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .trust-col p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 28px;
-      max-width: 380px;
+      display: flex;
+      justify-content: center;
     }
 
     .trust-badges {
@@ -187,37 +164,6 @@
       content: '✓';
       color: var(--blue);
       font-weight: 700;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-    .step-num {
-      width: 32px; height: 32px;
-      background: var(--blue);
-      color: white;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
-      flex-shrink: 0;
-    }
-    .step-text strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 2px;
-    }
-    .step-text span {
-      font-size: 13px;
-      color: #777;
     }
 
     /* ── FORM CARD ── */
@@ -476,9 +422,6 @@
         grid-template-columns: 1fr;
         margin-top: -40px;
       }
-      .trust-col {
-        display: none;
-      }
       .form-card {
         padding: 28px 20px;
       }
@@ -531,43 +474,7 @@
 <!-- MAIN -->
 <div class="main">
 
-  <!-- LEFT: TRUST -->
-  <div class="trust-col">
-    <h2>Cuentanos<br>Sobre Tu Auto</h2>
-    <p>Cuéntanos los datos básicos y un asesor te contacta con una oferta real.</p>
-
-    <div class="trust-badges">
-      <span class="trust-badge">Oferta inmediata</span>
-      <span class="trust-badge">Pago seguro</span>
-      <span class="trust-badge">Sin comisiones</span>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          <strong>Llena el formulario</strong>
-          <span>Menos de 2 minutos, sin compromisos.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          <strong>Te contactamos por WhatsApp</strong>
-          <span>Un asesor te envía una oferta real.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          <strong>Acordamos y firmamos</strong>
-          <span>Transferencia inmediata en notaria.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RIGHT: FORM CARD -->
+  <!-- FORM CARD -->
   <div class="form-card">
 
     <div id="form-state">
