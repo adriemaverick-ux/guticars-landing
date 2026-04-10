@@ -699,22 +699,13 @@
       }),
     }).catch(console.error);
 
-    // Show success immediately (synchronous)
+    // Show success and redirect ALL leads to WhatsApp
     formState.style.display = 'none';
     successState.style.display = 'block';
-
-    if (isHot) {
-      document.getElementById('success-title').textContent = '¡Listo!';
-      document.getElementById('success-msg').innerHTML = 'Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.';
-      document.getElementById('success-wa').style.display = 'inline-flex';
-      // Open WhatsApp now (synchronous = no popup blocker)
-      window.open('https://wa.me/51907077718?text=Hola%2C%20acabo%20de%20llenar%20el%20formulario%20en%20Guticars%20para%20vender%20mi%20auto.%20Quedo%20a%20la%20espera%20de%20su%20contacto%20%F0%9F%9A%97', '_blank');
-    } else {
-      document.getElementById('success-icon').textContent = '🙌';
-      document.getElementById('success-title').textContent = '¡Gracias!';
-      document.getElementById('success-msg').innerHTML = 'Recibimos la información de tu auto.<br>Te contactaremos pronto con una oferta.';
-      document.getElementById('success-wa').style.display = 'none';
-    }
+    document.getElementById('success-title').textContent = '¡Listo!';
+    document.getElementById('success-msg').innerHTML = 'Recibimos tu info. Un asesor de Guticars<br>te contacta en menos de 5 minutos por WhatsApp.';
+    document.getElementById('success-wa').style.display = 'inline-flex';
+    window.open('https://wa.me/51907077718?text=Hola%2C%20acabo%20de%20llenar%20el%20formulario%20en%20Guticars%20para%20vender%20mi%20auto.%20Quedo%20a%20la%20espera%20de%20su%20contacto%20%F0%9F%9A%97', '_blank');
   });
 </script>
 
